@@ -56,7 +56,7 @@ module.exports = {
         
        if (user.id === member.id) return interaction.reply({
             embeds: [new MessageEmbed()
-                .setAuthor(member.user.username, member.user.displayAvatarURL())
+              .setAuthor(member.user.username, member.user.displayAvatarURL())
                 .setDescription(`You can not warn yourself!`)
                 .setTitle("<:mcross:927673169706369045> Error")
                 .setColor("#ee5050")
@@ -66,6 +66,20 @@ module.exports = {
         }); 
 
 
+     const usr = member.guild.members.cache.get(user.id)
+
+     const mbr = member.guild.members.cache.get(member.id)
+    
+    if (usr.roles.highest.position >= mbr.roles.highest.position) return interaction.reply({
+            embeds: [new MessageEmbed()
+                .setAuthor(member.user.username, member.user.displayAvatarURL())
+                .setDescription(`${user.username} has a higher role then you`)
+                .setTitle("<:mcross:927673169706369045> Error")
+                .setColor("#ee5050")
+                
+            ],
+            
+        }); 
 
 
         let userInDB = await userSchema.findOne({ userID: user.id });

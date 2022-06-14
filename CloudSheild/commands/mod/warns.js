@@ -38,37 +38,43 @@ if (user) {
 
         let userInDB = await userSchema.findOne({ userID: u.id });
 
+const noWarns = new MessageEmbed()
+.setAuthor(member.user.username, member.user.displayAvatarURL())
+.setDescription(`**${u.username || u.user.username}** has no warns.`)
+.setColor("#2f3136")
+        
         if (!userInDB) {
-
-        const userDB = new userSchema({
-            userID: u.id,
-          });
-          await userDB.save().catch((e) => {
-            console.log(e);
-          });
-
-          userInDB = await userSchema.findOne({ userID: u.id });
+            return interaction.reply({ embeds: [noWarns]})
         }
 
 let s = " "
 if (userInDB.warns > 1) {
     s = "s"
 }
-         
-const embed = new MessageEmbed()
-.setAuthor(member.user.username, member.user.displayAvatarURL())
-.setTitle(`**${u.username || u.user.username} has ${userInDB.warns} warning${s}**`)
-.setColor("#2f3136")
 
+    let e = "" 
 
-
-
-
-const e = userInDB.warnReasons.map(        
+    if (userInDB.warns) {
+ e = userInDB.warnReasons.map(        
     (w, i) => `\n\`${i + 1}\` - ${w}`
 )
+    } 
 
-embed.setDescription(`${e}`)
+    const embed = new MessageEmbed()
+.setAuthor(member.user.username, member.user.displayAvatarURL())
+
+.setColor("#2f3136")
+
+    
+    if (!userInDB.warns) {
+        embed.setDescription(`**${u.username || u.user.username}** has no warns`) 
+
+    } else {
+      embed.addField(`${u.username || u.user.username} has ${userInDB.warns} warn${s}`, `${e}`)
+    }
+
+    
+
 
           interaction.reply({ embeds: [embed],
             

@@ -50,14 +50,21 @@ if (user) {
           userInDB = await userSchema.findOne({ userID: u.id });
         }
 
+    let amt = userInDB.merits
+
+    if (!userInDB) {
+      amt = 0
+    }
 let s = " "
-if (userInDB.merits > 1) {
+if (amt > 1 || amt === 0) {
     s = "s"
 }
+
+    
          
 const embed = new MessageEmbed()
 .setAuthor(member.user.username, member.user.displayAvatarURL())
-.setTitle(`**${u.username || u.user.username} has <:merits:929733805793738772> ${userInDB.merits} merit${s}**`)
+.setTitle(`**${u.username || u.user.username} has <:merit:944985559816867941> ${amt} merit${s}**`)
 .setColor("#2f3136")
 
 

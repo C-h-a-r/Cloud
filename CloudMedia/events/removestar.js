@@ -9,7 +9,7 @@ module.exports = {
         if (reaction.emoji.name === "⭐") {
      //   if (message.author.id === user.id) return;
         if (message.author.bot) return;
-        const starChannel = message.guild.channels.cache.find(channel => channel.name === "starboard")
+        const starChannel = message.guild.channels.cache.find(channel => channel.name.includes("starboard"))
         if (!starChannel) return message.channel.send(`It appears that you do not have a starboard channel.`); 
         const fetchedMessages = await starChannel.messages.fetch({ limit: 100 });
         const stars = fetchedMessages.find(m =>  m.embeds[0].footer.text.endsWith(message.id));
@@ -27,7 +27,7 @@ module.exports = {
 
 let star = parseInt(st) - 1
 
-          if (star <= 0) return stars.delete();
+          if (star < 5) return stars.delete();
 
           if (message.attachments.size > 0) {
            image = message.attachments.first().url;

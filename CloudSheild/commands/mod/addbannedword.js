@@ -20,7 +20,7 @@ module.exports = {
             options,
             id,
             createdTimestamp
-        } = interaction;
+        } = interaction; 
         const {
             guild
         } = member;

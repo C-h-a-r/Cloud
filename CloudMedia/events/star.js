@@ -7,9 +7,14 @@ module.exports = {
     let image = ""
         const message = reaction.message;
         if (reaction.emoji.name === "⭐") {
-     //   if (message.author.id === user.id) return;
+
+          
+if (message.author.id === user.id) return;
+
+        
+           if(reaction.message.reactions.cache.get('⭐').count < 5) return; 
         if (message.author.bot) return;
-        const starChannel = message.guild.channels.cache.find(channel => channel.name === "starboard")
+        const starChannel = message.guild.channels.cache.find(channel => channel.name.includes("starboard"))
         if (!starChannel) return message.channel.send(`It appears that you do not have a starboard channel.`); 
         const fetchedMessages = await starChannel.messages.fetch({ limit: 100 });
         const stars = fetchedMessages.find(m =>  m.embeds[0].footer.text.endsWith(message.id));
@@ -60,7 +65,7 @@ let star = parseInt(st) + 1
             if (message.attachments.size > 0) {
             embed.setImage(image)
             }
-          await starChannel.send({ content: `🌟 ** 1 ** <#${message.channel.id}>`, embeds: [embed] });
+          await starChannel.send({ content: `🌟 ** 5 ** <#${message.channel.id}>`, embeds: [embed] });
         } 
     } 
 

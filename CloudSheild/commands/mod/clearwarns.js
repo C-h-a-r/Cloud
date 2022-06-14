@@ -25,7 +25,7 @@ module.exports = {
             guild
         } = member;
 
-        const userSchema = require("../../models/user");
+        const userSchema = require("../../../models/user");
 
 
         if(!member.permissions.has("MANAGE_MESSAGES")) return interaction.reply({
